@@ -17,10 +17,10 @@ class Map
   public:
     /**
      * @brief Constructeur de la classe, alloue la mémoire pour le tableau de la carte
-     * @param width:int, largeur de la carte
-     * @param height:int, hauteur de la carte
+     * @param map_width:int, largeur de la carte
+     * @param map_height:int, hauteur de la carte
     */
-    Map(int width, int height);
+    Map(int map_width, int map_height);
 
     /**
      * @brief Destructeur de la classe, désalloue la mémoire pour le tableau de la carte
@@ -47,10 +47,12 @@ class Map
      * @brief Méthode d'affichage du tilemap
      * @param surface:SDL_Surface, surface d'écriture du tile map
     */
-    void display();
+    void display(SDL_Surface *surface);
 
   private:
     TileMap **map;
-    int width;
-    int height;
+    int map_width;
+    int map_height;
+    int tile_width;
+    int tile_height;
 };

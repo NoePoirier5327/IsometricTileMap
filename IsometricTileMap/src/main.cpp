@@ -27,28 +27,43 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  // Récupération de la surface de la fenêtre
+  // Récupération des surfaces de la fenêtre
   win_surface = SDL_GetWindowSurface(window);
+  //tile_surface = SDL_GetWindowSurface(window);
 
-  // On vérifie qu'on a bien récupérer la surface
+  // On vérifie qu'on a bien récupérer les surfaces
   if (!win_surface)
   {
-    fprintf(stderr, "Erreur dans la récupération de la surface : %s\n", SDL_GetError());
+    fprintf(stderr, "Erreur dans la récupération des surfaces : %s\n", SDL_GetError());
     return 1;
   }
+  
+  // Variable de gestion des événements de la fenêtre
+  SDL_Event event;
 
-  // On affiche un rectangle blanc
-  SDL_FillRect(win_surface, nullptr, SDL_MapRGB(win_surface->format, 255, 255, 255));
+  bool game_run = true;
+  
+  // Game loop
+  while (game_run)
+  {
+    // Gestion des événements
+    while (SDL_PollEvent(&event))
+    {
+      if (event.type == SDL_QUIT) 
+        game_run = false;
+    }
 
-  // On met à jour la fenêtre
-  SDL_UpdateWindowSurface(window);
+    // Affichage sur la fenêtre
+    // On affiche un rectangle blanc
+    SDL_FillRect(win_surface, nullptr, SDL_MapRGB(win_surface->format, 255, 255, 255));
+  
+    // Affichage de la carte
+    i_map->display(win_surface);
 
-  // On attend
-  int a;
-  scanf("%d", &a);
-
-  i_map->display();
-
+    // On met à jour la fenêtre
+    SDL_UpdateWindowSurface(window);
+  }
+  // On désinstancie la map
   delete i_map;
 
   // Destruction de la fenêtre
