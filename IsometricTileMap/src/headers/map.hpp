@@ -45,9 +45,9 @@ class Map
     
     /**
      * @brief Méthode d'affichage du tilemap
-     * @param surface:SDL_Surface, surface d'écriture du tile map
+     * @param renderer:SDL_Renderer, surface de rendu du tile map
     */
-    void display(SDL_Surface *surface);
+    void display(SDL_Renderer *renderer);
 
   private:
     TileMap **map;

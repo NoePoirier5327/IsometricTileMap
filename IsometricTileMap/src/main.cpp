@@ -1,3 +1,4 @@
+#include <SDL2/SDL_render.h>
 #include <stdio.h>
 #include <SDL2/SDL.h>
 
@@ -5,7 +6,7 @@
 
 int main(int argc, char **argv)
 {
-  SDL_Surface *win_surface = nullptr;
+  SDL_Renderer *win_renderer = nullptr;
   SDL_Window *window = nullptr;
 
   Map *i_map = new Map(5,5);
@@ -28,13 +29,13 @@ int main(int argc, char **argv)
   }
 
   // Récupération des surfaces de la fenêtre
-  win_surface = SDL_GetWindowSurface(window);
+  win_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   //tile_surface = SDL_GetWindowSurface(window);
 
   // On vérifie qu'on a bien récupérer les surfaces
-  if (!win_surface)
+  if (!win_renderer)
   {
-    fprintf(stderr, "Erreur dans la récupération des surfaces : %s\n", SDL_GetError());
+    fprintf(stderr, "Erreur dans la création du rendu : %s\n", SDL_GetError());
     return 1;
   }
   
@@ -55,13 +56,17 @@ int main(int argc, char **argv)
 
     // Affichage sur la fenêtre
     // On affiche un rectangle blanc
-    SDL_FillRect(win_surface, nullptr, SDL_MapRGB(win_surface->format, 255, 255, 255));
+    //SDL_FillRect(win_surface, nullptr, SDL_MapRGB(win_surface->format, 255, 255, 255));
+    SDL_SetRenderDrawColor(win_renderer, 255, 255, 255, 255);
+    SDL_RenderClear(win_renderer);
+    SDL_RenderDrawRect(win_renderer, nullptr);
   
     // Affichage de la carte
-    i_map->display(win_surface);
+    i_map->display(win_renderer);
 
     // On met à jour la fenêtre
-    SDL_UpdateWindowSurface(window);
+    //SDL_UpdateWindowSurface(window);
+    SDL_RenderPresent(win_renderer);
   }
   // On désinstancie la map
   delete i_map;
@@ -69,8 +74,8 @@ int main(int argc, char **argv)
   // Destruction de la fenêtre
   SDL_DestroyWindow(window);
 
-  // Destruction de la surface
-  SDL_FreeSurface(win_surface);
+  // Destruction du rendu de la fenêtre
+  SDL_DestroyRenderer(win_renderer);
 
   // On quitte SDL
   SDL_Quit();

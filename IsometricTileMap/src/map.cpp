@@ -34,10 +34,10 @@ TileMap Map::get_tile(int x, int y)
   else return t_void;
 }
 
-void Map::display(SDL_Surface *surface)
+void Map::display(SDL_Renderer *renderer)
 {
   // Affichage dans le terminal
-  //printf("\x1b[0,0H]");
+  //printf("\x1b[1,0H]");
   for (int ligne = 0; ligne < this->map_height; ligne++)
   {
     for (int colonne = 0; colonne < this->map_width; colonne++) printf("%d ", this->map[ligne][colonne]);
@@ -53,7 +53,9 @@ void Map::display(SDL_Surface *surface)
       tile_rect.y = ligne * this->map_height;
       tile_rect.w = this->tile_width;
       tile_rect.h = this->tile_height;
-
-      SDL_FillRect(surface, &tile_rect, SDL_MapRGB(surface->format, 0, 0, 0));
+      
+      SDL_SetRenderDrawColor(renderer, 0, 255, 0, 100);
+      SDL_RenderFillRect(renderer, &tile_rect);
+      //SDL_FillRect(surface, &tile_rect, SDL_MapRGB(surface->format, 0, 0, 0));
     }
 }
