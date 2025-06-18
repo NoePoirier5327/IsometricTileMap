@@ -57,9 +57,9 @@ int main(int argc, char **argv)
     // Affichage sur la fenêtre
     // On affiche un rectangle blanc
     //SDL_FillRect(win_surface, nullptr, SDL_MapRGB(win_surface->format, 255, 255, 255));
-    SDL_SetRenderDrawColor(win_renderer, 255, 255, 255, 255);
-    SDL_RenderClear(win_renderer);
-    SDL_RenderDrawRect(win_renderer, nullptr);
+    SDL_SetRenderDrawColor(win_renderer, 255, 255, 255, 255); // On met la couleur d'affichage à blanc
+    SDL_RenderClear(win_renderer); // On nettoie la fenêtre de rendu
+    SDL_RenderDrawRect(win_renderer, nullptr); // On affiche le fond (un rectangle blanc)
   
     // Affichage de la carte
     i_map->display(win_renderer);
