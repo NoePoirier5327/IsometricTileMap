@@ -2,12 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
-
-enum TileMap
-{
-  t_floor = 0,
-  t_void = -1
-};
+#include "tile.hpp"
 
 /**
  * @brief Classe permettant la gestion de la carte isométrique 
@@ -31,17 +26,17 @@ class Map
      * @brief Méthode permettant de modifier une valeur de la carte aux indexs en paramètre
      * @param x:int, index de la colonne de la carte à modifier
      * @param y:int, index de la ligne de la carte à modifier
-     * @param value:TileMap, valeur à attribuer aux coordonnées dans la carte
+     * @param value:TileType, valeur à attribuer aux coordonnées dans la carte
     */
-    void modify(int x, int y, TileMap value);
+    void modify(int x, int y, TileType value);
     
     /**
      * @brief Accesseur du type d'une tile dans la map à des coordonnées données, si les coordonnées sortent de la carte, on récupère du vide
      * @param x:int, index de la colonne de la carte à récupérer
      * @param y:int, index de la ligne de la carte à récupérer
-     * @return TileMap, tuile stockée dans la map à récupérer
+     * @return TileType, tuile stockée dans la map à récupérer
      */
-    TileMap get_tile(int x, int y);
+    TileType get_tile(int x, int y);
     
     /**
      * @brief Méthode d'affichage du tilemap
@@ -50,7 +45,7 @@ class Map
     void display(SDL_Renderer *renderer);
 
   private:
-    TileMap **map;
+    Tile ***map; // carte composée d'intances de tuiles
     int map_width;
     int map_height;
     int tile_width;

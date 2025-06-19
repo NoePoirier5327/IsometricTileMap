@@ -5,32 +5,34 @@ Map::Map(int map_width, int map_height)
   this->map_width = map_width;
   this->map_height = map_height;
   
-  // Temporaire (pour l'affichage en tile map normal)
-  this->tile_width = 200;
-  this->tile_height = 200;
-  
   // Allocation de la carte
-  this->map = new TileMap*[this->map_height];
-  for (int ligne = 0; ligne < this->map_height; ligne++) this->map[ligne] = new TileMap[this->map_width];
+  this->map = new Tile**[this->map_height];
+  for (int ligne = 0; ligne < this->map_height; ligne++) this->map[ligne] = new Tile*[this->map_width];
 
-  // Remplissage de la carte
+  // Remplissage de la carte et ajout des coordonnées + instanciation des tuiles
   for (int ligne = 0; ligne < this->map_height; ligne++)
     for (int colonne = 0; colonne < this->map_width; colonne++)
-      this->map[ligne][colonne] = t_floor;
+      this->map[ligne][colonne] = new Tile(t_grass, 100, 100, colonne, ligne);
 }
 
 Map::~Map()
 {
+  // on désintancie les tuiles
+  for (int ligne = 0; ligne < this->map_height; ligne++)
+    for (int colonne = 0; colonne < this->map_width; colonne++)
+      delete this->map[ligne][colonne];
+  
+  // on désintancie le tableau
   for (int ligne = 0; ligne < this->map_height; ligne++)
     delete[] this->map[ligne];
   delete[] this->map;
 }
 
-void Map::modify(int x, int y, TileMap value) { if (x >= 0 && x < this->map_width && y >= 0 && y < this->map_height) this->map[x][y] = value; }
+void Map::modify(int x, int y, TileType value) { if (x >= 0 && x < this->map_width && y >= 0 && y < this->map_height) this->map[x][y]->set_type(value); }
 
-TileMap Map::get_tile(int x, int y)
+TileType Map::get_tile(int x, int y)
 {
-  if (x >= 0 && x < this->map_width && y >= 0 && y < this->map_height) return this->map[x][y];
+  if (x >= 0 && x < this->map_width && y >= 0 && y < this->map_height) return this->map[x][y]->get_type();
   else return t_void;
 }
 
@@ -40,22 +42,12 @@ void Map::display(SDL_Renderer *renderer)
   //printf("\x1b[1,0H]");
   for (int ligne = 0; ligne < this->map_height; ligne++)
   {
-    for (int colonne = 0; colonne < this->map_width; colonne++) printf("%d ", this->map[ligne][colonne]);
+    for (int colonne = 0; colonne < this->map_width; colonne++) printf("%d ", this->map[ligne][colonne]->get_type());
     printf("\n");
   }
 
   // Affichage sur la fenêtre sdl
-  SDL_Rect tile_rect;
   for (int ligne = 0; ligne < this->map_height; ligne++)
     for (int colonne = 0; colonne < this->map_width; colonne++)
-    {
-      tile_rect.x = colonne * this->map_width;
-      tile_rect.y = ligne * this->map_height;
-      tile_rect.w = this->tile_width;
-      tile_rect.h = this->tile_height;
-      
-      SDL_SetRenderDrawColor(renderer, 0, 255, 0, 100);
-      SDL_RenderFillRect(renderer, &tile_rect);
-      //SDL_FillRect(surface, &tile_rect, SDL_MapRGB(surface->format, 0, 0, 0));
-    }
+      this->map[ligne][colonne]->display(renderer);
 }

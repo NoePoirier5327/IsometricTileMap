@@ -10,6 +10,7 @@ int main(int argc, char **argv)
   SDL_Window *window = nullptr;
 
   Map *i_map = new Map(5,5);
+  i_map->modify(0, 2, t_water);
 
   // On initialise la SDL, s'il y a une erreur, l'initialisation renvoie -1
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -41,7 +42,6 @@ int main(int argc, char **argv)
   
   // Variable de gestion des événements de la fenêtre
   SDL_Event event;
-
   bool game_run = true;
   
   // Game loop
