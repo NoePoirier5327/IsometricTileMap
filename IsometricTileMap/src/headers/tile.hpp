@@ -7,7 +7,8 @@ enum TileType
   t_void = -1,
   t_floor = 0,
   t_water = 1,
-  t_grass = 2
+  t_grass = 2,
+  t_red_sand = 3
 };
 
 /**
@@ -29,8 +30,9 @@ class Tile
     /**
      * @brief Méthode permettant l'affichage de la tuile courante sur la fenêtre SDL
      * @param renderer:SDL_Renderer, instance de rendu de la fenêtre SDL
+     * @param texture:SDL_Texture, instance de texture du tileset
     */
-    void display(SDL_Renderer *renderer);
+    void display(SDL_Renderer *renderer, SDL_Texture *texture);
     
     /**
      * @brief Méthode permettant de récupérer le type de la tuile courante
@@ -57,5 +59,5 @@ class Tile
     int tile_height; // hauteur de la tuile
     int pos_x; // position en x de la tuile
     int pos_y; // position en y de la tuile
-    int color[3][3]; // couleur de la tuile
+    SDL_Rect wanted_tile[4]; // Assets des tiles
 };

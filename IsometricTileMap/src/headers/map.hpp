@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include "tile.hpp"
 
@@ -41,8 +42,9 @@ class Map
     /**
      * @brief Méthode d'affichage du tilemap
      * @param renderer:SDL_Renderer, surface de rendu du tile map
+     * @param texture:SDL_Texture, texture du tile_set
     */
-    void display(SDL_Renderer *renderer);
+    void display(SDL_Renderer *renderer, SDL_Texture *texture);
 
   private:
     Tile ***map; // carte composée d'intances de tuiles

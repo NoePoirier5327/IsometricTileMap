@@ -1,5 +1,5 @@
 CXX = g++
-LDFLAGS = -lSDL2main -lSDL2
+LDFLAGS = -lSDL2main -lSDL2 -lSDL2_image
 INCLDFLAGS = 
 DEBUGFLAGS = -g
 CXXFLAGS = -Wall -std=c++17
