@@ -29,7 +29,7 @@ int main(int argc, char **argv)
   }
 
   // Création de la fenêtre
-  window = SDL_CreateWindow("Isometric Tile Map", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
+  window = SDL_CreateWindow("Isometric Tile Map", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 430, 300, SDL_WINDOW_SHOWN);
 
   // Vérification de la bonne création de la fenêtre
   if (!window)
